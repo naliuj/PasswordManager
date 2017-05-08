@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package passwordmanager.safe;
+package passwordmanager.safe.encrypt;
 
 /**
  *
  * @author julian
  */
-public class DummyEncrypt {
+public interface Encryptable {
     
 }
