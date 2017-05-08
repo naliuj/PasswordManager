@@ -9,6 +9,16 @@ package passwordmanager.hash;
  *
  * @author julian
  */
-public class DummyHash {
+public class DummyHash implements Hashable {
+
+    @Override
+    public String getSaltedHash(String password) {
+        return password;
+    }
+
+    @Override
+    public boolean check(String password, String stored) {
+        return (password == null ? stored == null : password.equals(stored));
+    }
     
 }

@@ -9,6 +9,16 @@ package passwordmanager.hash;
  *
  * @author julian
  */
-public class Hash {
+public class Hash implements Hashable {
+
+    @Override
+    public String getSaltedHash(String password) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean check(String password, String stored) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

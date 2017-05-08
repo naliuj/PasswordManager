@@ -10,5 +10,16 @@ package passwordmanager.hash;
  * @author julian
  */
 public class HashFactory {
+
+    public Hashable getHash(int key) {
+        switch (key) {
+            case 0:
+                return new DummyHash();
+            case 1:
+                return new Hash();
+            default:
+                throw new Error("key is out of range");
+        }
+    }
     
 }

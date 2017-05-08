@@ -11,4 +11,7 @@ package passwordmanager.hash;
  */
 public interface Hashable {
     
+    public String getSaltedHash(String password);
+    public boolean check(String password, String stored);
+    
 }
