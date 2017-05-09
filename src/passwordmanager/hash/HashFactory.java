@@ -11,14 +11,14 @@ package passwordmanager.hash;
  */
 public class HashFactory {
 
-    public Hashable getHash(int key) {
+    public Hashable getHash(String key) {
         switch (key) {
-            case 0:
+            case "dummy":
                 return new DummyHash();
-            case 1:
+            case "real":
                 return new Hash();
             default:
-                throw new Error("key is out of range");
+                throw new Error("Unsupported key");
         }
     }
     
