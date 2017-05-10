@@ -9,6 +9,16 @@ package passwordmanager.safe.encrypt;
  *
  * @author julian
  */
-public class DummyEncrypt {
+public class DummyEncrypt implements Encryptable {
+
+    @Override
+    public byte[] encrypt(String password) {
+        return password.getBytes();
+    }
+
+    @Override
+    public String decrypt(byte[] password) {
+        return new String(password);
+    }
     
 }

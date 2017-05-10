@@ -11,4 +11,15 @@ package passwordmanager.safe.encrypt;
  */
 public class EncryptionFactory {
     
+    public Encryptable getEncryption(String key) {
+        switch (key) {
+            case "dummy":
+                return new DummyEncrypt();
+            case "real":
+                return new Encryption();
+            default:
+                throw new Error("Unsupported key");
+        }
+    }
+    
 }

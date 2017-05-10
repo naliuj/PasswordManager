@@ -9,6 +9,16 @@ package passwordmanager.safe.encrypt;
  *
  * @author julian
  */
-public class Encryption {
+public class Encryption implements Encryptable {
+
+    @Override
+    public byte[] encrypt(String password) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String decrypt(byte[] password) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

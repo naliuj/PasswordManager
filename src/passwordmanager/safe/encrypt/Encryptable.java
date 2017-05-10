@@ -11,4 +11,7 @@ package passwordmanager.safe.encrypt;
  */
 public interface Encryptable {
     
+    public byte[] encrypt(String password);
+    public String decrypt(byte[] password);
+    
 }
