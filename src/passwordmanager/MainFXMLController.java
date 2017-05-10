@@ -5,9 +5,15 @@
  */
 package passwordmanager;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import passwordmanager.safe.Safe;
 
 /**
  * FXML Controller class
@@ -16,6 +22,38 @@ import javafx.fxml.Initializable;
  */
 public class MainFXMLController implements Initializable {
 
+    private Safe safe;
+    
+    private void loadSafe(String path) {
+        try {
+            FileInputStream fileIn = new FileInputStream(path);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            safe = (Safe) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            c.printStackTrace();
+        }
+    }
+    
+    /**
+     * Serializes the safe object to a file.
+     */
+    private void saveSafe() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(safe.getPath());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(safe);
+            out.close();
+            fileOut.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+
+    
     /**
      * Initializes the controller class.
      */
