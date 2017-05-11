@@ -12,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import passwordmanager.safe.Safe;
 
@@ -38,9 +40,6 @@ public class MainFXMLController implements Initializable {
         }
     }
     
-    /**
-     * Serializes the safe object to a file.
-     */
     private void saveSafe() {
         try {
             FileOutputStream fileOut = new FileOutputStream(safe.getPath());
@@ -51,6 +50,20 @@ public class MainFXMLController implements Initializable {
         } catch (IOException i) {
             i.printStackTrace();
         }
+    }
+    
+    @FXML
+    private void newButtonClick(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet...");
+    }
+    
+    @FXML
+    private void editButtonClick(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet...");
+    }
+    
+    @FXML private void deleteButtonClick(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet...");
     }
 
     
