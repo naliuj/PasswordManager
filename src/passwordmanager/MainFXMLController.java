@@ -14,8 +14,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import passwordmanager.hash.HashFactory;
+import passwordmanager.hash.Hashable;
 import passwordmanager.safe.Safe;
+import passwordmanager.PasswordManager;
 
 /**
  * FXML Controller class
@@ -23,35 +32,30 @@ import passwordmanager.safe.Safe;
  * @author julian
  */
 public class MainFXMLController implements Initializable {
-
+    
+    private String path = "safe.psafe";
     private Safe safe;
+    private Hashable hash = new HashFactory().getHash("dummy");
     
-    private void loadSafe(String path) {
-        try {
-            FileInputStream fileIn = new FileInputStream(path);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            safe = (Safe) in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
-        }
+    @FXML private PasswordField passwordPasswordField;
+    @FXML private VBox loginVBox;
+        
+    private void showMainWindow() throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/MainFXML.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
-    private void saveSafe() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(safe.getPath());
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(safe);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
+    public void loadSafe() throws IOException, ClassNotFoundException {
+        FileInputStream fileIn = new FileInputStream(path);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        safe = (Safe) in.readObject();
+        in.close();
+        fileIn.close();
     }
-    
+       
     @FXML
     private void newButtonClick(ActionEvent event) {
         throw new UnsupportedOperationException("Not supported yet...");
@@ -67,7 +71,14 @@ public class MainFXMLController implements Initializable {
     }
     
     @FXML private void loginButtonClick(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet...");
+        if (hash.check(passwordPasswordField.getText(),
+                safe.getPasswordHash())) {
+            try {
+                showMainWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     
@@ -76,7 +87,14 @@ public class MainFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            loadSafe();
+        } catch (IOException i) {
+            safe = new Safe("password");
+            safe.save(path);
+        } catch (ClassNotFoundException c) {
+            c.printStackTrace();
+        }
     }    
     
 }

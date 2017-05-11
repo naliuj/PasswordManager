@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import passwordmanager.safe.Safe;
 
 /**
  *
@@ -18,15 +19,16 @@ import javafx.stage.Stage;
 public class PasswordManager extends Application {
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception {        
         Parent root = FXMLLoader.load(getClass().getResource("FXML/LoginFXML.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.show();
+        
     }
-
+    
     /**
      * @param args the command line arguments
      */

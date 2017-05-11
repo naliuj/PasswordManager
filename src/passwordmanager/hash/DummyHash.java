@@ -5,11 +5,13 @@
  */
 package passwordmanager.hash;
 
+import java.io.Serializable;
+
 /**
  *
  * @author julian
  */
-public class DummyHash implements Hashable {
+public class DummyHash implements Hashable, Serializable {
 
     @Override
     public String getSaltedHash(String password) {
