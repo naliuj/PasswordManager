@@ -65,6 +65,10 @@ public class MainFXMLController implements Initializable {
     @FXML private void deleteButtonClick(ActionEvent event) {
         throw new UnsupportedOperationException("Not supported yet...");
     }
+    
+    @FXML private void loginButtonClick(ActionEvent event) {
+        throw new UnsupportedOperationException("Not supported yet...");
+    }
 
     
     /**
