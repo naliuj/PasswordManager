@@ -6,25 +6,20 @@
 package passwordmanager;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import passwordmanager.hash.HashFactory;
 import passwordmanager.hash.Hashable;
 import passwordmanager.safe.Safe;
-import passwordmanager.PasswordManager;
 
 /**
  * FXML Controller class
@@ -36,18 +31,11 @@ public class MainFXMLController implements Initializable {
     private String path = "safe.psafe";
     private Safe safe;
     private Hashable hash = new HashFactory().getHash("dummy");
-    
+    Stage stage2;
+            
     @FXML private PasswordField passwordPasswordField;
     @FXML private VBox loginVBox;
         
-    private void showMainWindow() throws IOException {
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("FXML/MainFXML.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    
     public void loadSafe() throws IOException, ClassNotFoundException {
         FileInputStream fileIn = new FileInputStream(path);
         ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -73,15 +61,12 @@ public class MainFXMLController implements Initializable {
     @FXML private void loginButtonClick(ActionEvent event) {
         if (hash.check(passwordPasswordField.getText(),
                 safe.getPasswordHash())) {
-            try {
-                showMainWindow();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            stage2 = (Stage) loginVBox.getScene().getWindow();
+            stage2.hide();
         }
     }
-
     
+
     /**
      * Initializes the controller class.
      */
@@ -95,6 +80,6 @@ public class MainFXMLController implements Initializable {
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }
-    }    
-    
+    }
+        
 }
