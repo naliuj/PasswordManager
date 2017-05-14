@@ -31,7 +31,6 @@ public class MainFXMLController implements Initializable {
     private String path = "safe.psafe";
     private Safe safe;
     private Hashable hash = new HashFactory().getHash("dummy");
-    Stage stage2;
             
     @FXML private PasswordField passwordPasswordField;
     @FXML private VBox loginVBox;
@@ -61,7 +60,7 @@ public class MainFXMLController implements Initializable {
     @FXML private void loginButtonClick(ActionEvent event) {
         if (hash.check(passwordPasswordField.getText(),
                 safe.getPasswordHash())) {
-            stage2 = (Stage) loginVBox.getScene().getWindow();
+            Stage stage2 = (Stage) loginVBox.getScene().getWindow();
             stage2.hide();
         }
     }
