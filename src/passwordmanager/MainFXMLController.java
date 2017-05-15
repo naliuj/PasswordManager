@@ -61,7 +61,7 @@ public class MainFXMLController implements Initializable {
         if (hash.check(passwordPasswordField.getText(),
                 safe.getPasswordHash())) {
             Stage stage2 = (Stage) loginVBox.getScene().getWindow();
-            stage2.hide();
+            stage2.close();
         }
     }
     
