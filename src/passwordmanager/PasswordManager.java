@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -35,7 +36,9 @@ public class PasswordManager extends Application {
         Scene scene2 = new Scene(root2);
         
         stage2.setScene(scene2);
-        stage2.show();
+        stage2.initOwner(stage);
+        stage2.initModality(Modality.APPLICATION_MODAL);
+        stage2.showAndWait();
     }
         
     /**
