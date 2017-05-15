@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -20,25 +21,26 @@ public class PasswordManager extends Application {
     
     
     @Override
-    public void start(Stage stage) throws Exception {        
-        FXMLLoader loader =  new FXMLLoader(getClass().getResource("FXML/MainFXML.fxml"));
-        Parent root = (Parent) loader.load();
+    public void start(Stage mainStage) throws Exception {        
+        FXMLLoader mainLoader =  new FXMLLoader(getClass().getResource("FXML/MainFXML.fxml"));
+        Parent mainRoot = (Parent) mainLoader.load();
         
-        Scene scene = new Scene(root);
+        Scene mainScene = new Scene(mainRoot);
         
-        stage.setScene(scene);
-        stage.show();
+        mainStage.setScene(mainScene);
+        mainStage.show();
 
-        Stage stage2 = new Stage();
-        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
-        Parent root2 = (Parent) loader2.load();
+        Stage loginStage = new Stage();
+        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
+        Parent loginRoot = (Parent) loginLoader.load();
         
-        Scene scene2 = new Scene(root2);
+        Scene loginScene = new Scene(loginRoot);
         
-        stage2.setScene(scene2);
-        stage2.initOwner(stage);
-        stage2.initModality(Modality.APPLICATION_MODAL);
-        stage2.showAndWait();
+        loginStage.setScene(loginScene);
+        loginStage.initStyle(StageStyle.UTILITY);
+        loginStage.initOwner(mainStage);
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+        loginStage.showAndWait();
     }
         
     /**

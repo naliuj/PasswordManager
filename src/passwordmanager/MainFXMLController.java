@@ -45,7 +45,6 @@ public class MainFXMLController implements Initializable {
        
     @FXML
     private void newButtonClick(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet...");
     }
     
     @FXML
@@ -60,8 +59,8 @@ public class MainFXMLController implements Initializable {
     @FXML private void loginButtonClick(ActionEvent event) {
         if (hash.check(passwordPasswordField.getText(),
                 safe.getPasswordHash())) {
-            Stage stage2 = (Stage) loginVBox.getScene().getWindow();
-            stage2.close();
+            Stage loginStage = (Stage) loginVBox.getScene().getWindow();
+            loginStage.close();
         }
     }
     
