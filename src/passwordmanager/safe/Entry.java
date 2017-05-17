@@ -7,20 +7,20 @@ package passwordmanager.safe;
 
 import passwordmanager.safe.encrypt.Encryptable;
 import passwordmanager.safe.encrypt.EncryptionFactory;
+import java.io.Serializable;
 
 /**
  *
  * @author julian
  */
-public class Entry {
+public class Entry implements Serializable {
     
     private static int entryCount = 0;
     final private int id;
     private String title;
     private String username;
     private byte[] password;
-    private Encryptable crypt = new EncryptionFactory()
-            .getEncryption("dummy");
+    private Encryptable crypt = new EncryptionFactory().getEncryption("dummy");
     
     public int getId() { return id; }
     
@@ -32,6 +32,11 @@ public class Entry {
     
     public String getPassword() { return crypt.decrypt(password); }
     public void setPassword(String password) { this.password = crypt.encrypt(password); }
+    
+    @Override
+    public String toString() {
+        return String.format("%s [%s]", title, username);
+    }
     
     public Entry(String title, String username, String password) {
         this.id = entryCount;

@@ -4,3 +4,5 @@ dist/
 manifest.mf
 nbproject/
 *.psafe
+*.log
+*.safe

@@ -21,26 +21,27 @@ public class PasswordManager extends Application {
     
     
     @Override
-    public void start(Stage mainStage) throws Exception {        
-        FXMLLoader mainLoader =  new FXMLLoader(getClass().getResource("FXML/MainFXML.fxml"));
-        Parent mainRoot = (Parent) mainLoader.load();
+    public void start(Stage stage) throws Exception {        
+        FXMLLoader loader =  new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
+        Parent root = (Parent) loader.load();
         
-        Scene mainScene = new Scene(mainRoot);
+        Scene scene = new Scene(root);
         
-        mainStage.setScene(mainScene);
-        mainStage.show();
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setScene(scene);
+        stage.show();
 
-        Stage loginStage = new Stage();
-        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
-        Parent loginRoot = (Parent) loginLoader.load();
-        
-        Scene loginScene = new Scene(loginRoot);
-        
-        loginStage.setScene(loginScene);
-        loginStage.initStyle(StageStyle.UTILITY);
-        loginStage.initOwner(mainStage);
-        loginStage.initModality(Modality.APPLICATION_MODAL);
-        loginStage.showAndWait();
+//        Stage loginStage = new Stage();
+//        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
+//        Parent loginRoot = (Parent) loginLoader.load();
+//        
+//        Scene loginScene = new Scene(loginRoot);
+//        
+//        loginStage.setScene(loginScene);
+//        loginStage.initStyle(StageStyle.UTILITY);
+//        loginStage.initOwner(mainStage);
+//        loginStage.initModality(Modality.APPLICATION_MODAL);
+//        loginStage.showAndWait();
     }
         
     /**

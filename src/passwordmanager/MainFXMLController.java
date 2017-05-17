@@ -9,16 +9,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import passwordmanager.hash.HashFactory;
 import passwordmanager.hash.Hashable;
+import passwordmanager.safe.Entry;
 import passwordmanager.safe.Safe;
 
 /**
@@ -30,19 +41,12 @@ public class MainFXMLController implements Initializable {
     
     private String path = "safe.psafe";
     private Safe safe;
-    private Hashable hash = new HashFactory().getHash("dummy");
-            
-    @FXML private PasswordField passwordPasswordField;
-    @FXML private VBox loginVBox;
-        
-    public void loadSafe() throws IOException, ClassNotFoundException {
-        FileInputStream fileIn = new FileInputStream(path);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        safe = (Safe) in.readObject();
-        in.close();
-        fileIn.close();
-    }
-       
+    private final Hashable hash = new HashFactory().getHash("dummy");
+    private Stage stage;
+    
+    @FXML private ListView<Entry> listView;
+    @FXML private VBox vBox;
+           
     @FXML
     private void newButtonClick(ActionEvent event) {
     }
@@ -52,32 +56,32 @@ public class MainFXMLController implements Initializable {
         throw new UnsupportedOperationException("Not supported yet...");
     }
     
-    @FXML private void deleteButtonClick(ActionEvent event) {
+    @FXML
+    private void deleteButtonClick(ActionEvent event) {
         throw new UnsupportedOperationException("Not supported yet...");
     }
     
-    @FXML private void loginButtonClick(ActionEvent event) {
-        if (hash.check(passwordPasswordField.getText(),
-                safe.getPasswordHash())) {
-            Stage loginStage = (Stage) loginVBox.getScene().getWindow();
-            loginStage.close();
-        }
+    private void populateListView(ArrayList<Entry> entries) {
+        ObservableList<Entry> entryList = FXCollections.observableArrayList();
+        entries.forEach((e) -> {
+            entryList.add((Entry) e);
+        });
+        listView.setItems(entryList);
     }
     
-
+    public void setSafe(Safe safe) {
+        this.safe = safe;
+        System.out.println("set the safe");
+        populateListView(safe.getAllEntries());
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            loadSafe();
-        } catch (IOException i) {
-            safe = new Safe("password");
-            safe.save(path);
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
-        }
+        System.out.println(safe);
+//        populateListView(safe.getAllEntries());
     }
         
 }

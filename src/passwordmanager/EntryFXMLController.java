@@ -44,6 +44,7 @@ public class EntryFXMLController implements Initializable {
                 passwordField.getText()
         );
         safe.addEntry(e);
+        safe.save("safe.psafe");
         stage.close();
     }
     

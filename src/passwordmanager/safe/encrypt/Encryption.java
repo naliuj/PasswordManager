@@ -5,11 +5,13 @@
  */
 package passwordmanager.safe.encrypt;
 
+import java.io.Serializable;
+
 /**
  *
  * @author julian
  */
-public class Encryption implements Encryptable {
+public class Encryption implements Encryptable, Serializable {
 
     @Override
     public byte[] encrypt(String password) {

@@ -49,8 +49,8 @@ public class Safe implements Serializable {
      * Get all the items in the entries ArrayList
      * @return An Iterator object for the entries in the Safe
      */
-    public Iterator<Entry> getAllEntries() {
-        return entries.iterator();
+    public ArrayList<Entry> getAllEntries() {
+        return entries;
     }
     
     /**
@@ -58,6 +58,7 @@ public class Safe implements Serializable {
      * @param id The ID of the entry
      * @return The Entry that matches the given ID
      */
+    /*
     public Entry getEntry(int id) {
         Entry e;
         Iterator<Entry> i = getAllEntries();
@@ -69,6 +70,7 @@ public class Safe implements Serializable {
         }
         throw new Error("Can't find Entry by ID: " + id);
     }
+    */
     
     /**
      * Function to create or change a password that automatically hashes it.
@@ -84,6 +86,8 @@ public class Safe implements Serializable {
 
     public Safe(String password) {
         this.passwordHash = hash.getSaltedHash(password);
+        entries.add(new Entry("title1", "username1", "password1"));
+        entries.add(new Entry("title2", "username2", "password2"));
     }
     
     public Safe() {}

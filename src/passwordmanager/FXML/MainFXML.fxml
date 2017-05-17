@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox id="vBox" prefHeight="326.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="passwordmanager.MainFXMLController">
    <children>
       <MenuBar>
@@ -29,11 +28,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <ListView prefHeight="243.0" prefWidth="475.0" VBox.vgrow="ALWAYS">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </ListView>
+      <ListView fx:id="listView" prefHeight="243.0" prefWidth="475.0" VBox.vgrow="ALWAYS" />
       <AnchorPane prefHeight="53.0" prefWidth="475.0">
          <children>
             <Button fx:id="newButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#newButtonClick" text="New Entry" />
