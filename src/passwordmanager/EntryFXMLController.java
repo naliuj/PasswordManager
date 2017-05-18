@@ -44,6 +44,7 @@ public class EntryFXMLController implements Initializable {
     
     public void setEntry(Entry entry) {
         this.entry = entry;
+        initEntry();
     }
     
     private void initEntry() {
@@ -59,7 +60,6 @@ public class EntryFXMLController implements Initializable {
     
     @FXML
     private void saveEntryButtonClick(ActionEvent event) {
-        initEntry();
         entry.setTitle(titleField.getText());
         entry.setUsername(usernameField.getText());
         entry.setPassword(passwordField.getText());

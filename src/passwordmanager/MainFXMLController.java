@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -38,10 +43,13 @@ public class MainFXMLController implements Initializable {
     private Safe safe;
     private final Hashable hash = new HashFactory().getHash("dummy");
     private Stage stage;
+    private Entry selectedEntry;
     
     @FXML private ListView<Entry> listView;
     @FXML private VBox vBox;
-           
+    @FXML private Button deleteButton;
+    @FXML private Button editButton;
+    
     @FXML
     private void newButtonClick(ActionEvent event) throws IOException {
         showEntryWindow(null);
@@ -49,7 +57,11 @@ public class MainFXMLController implements Initializable {
     
     @FXML
     private void editButtonClick(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet...");
+        try {
+            showEntryWindow(selectedEntry);
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
     
     @FXML
@@ -63,6 +75,21 @@ public class MainFXMLController implements Initializable {
             entryList.add((Entry) e);
         });
         listView.setItems(entryList);
+        
+        listView.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends Entry> observable,
+                        Entry oldEntry, Entry newEntry) -> {
+                    if (newEntry == null) {
+                        deleteButton.setDisable(true);
+                        editButton.setDisable(true);
+                        selectedEntry = null;
+                    } else {
+                        deleteButton.setDisable(false);
+                        editButton.setDisable(false);
+                        selectedEntry = newEntry;
+                    }
+        });
+        
     }
     
     private void showEntryWindow(Entry e) throws IOException {
@@ -74,6 +101,7 @@ public class MainFXMLController implements Initializable {
         
         entryController.setSafe(safe);
         entryController.setStage(entryStage);
+        entryController.setEntry(e);
         
         Scene entryScene = new Scene(entryRoot);
         
