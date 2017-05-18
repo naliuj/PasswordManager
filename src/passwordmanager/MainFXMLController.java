@@ -5,6 +5,7 @@
  */
 package passwordmanager;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -12,14 +13,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import passwordmanager.hash.HashFactory;
 import passwordmanager.hash.Hashable;
 import passwordmanager.safe.Entry;
 import passwordmanager.safe.Safe;
+import passwordmanager.safe.Serializer;
 
 /**
  * FXML Controller class
@@ -28,7 +35,6 @@ import passwordmanager.safe.Safe;
  */
 public class MainFXMLController implements Initializable {
     
-    private String path = "safe.psafe";
     private Safe safe;
     private final Hashable hash = new HashFactory().getHash("dummy");
     private Stage stage;
@@ -37,7 +43,8 @@ public class MainFXMLController implements Initializable {
     @FXML private VBox vBox;
            
     @FXML
-    private void newButtonClick(ActionEvent event) {
+    private void newButtonClick(ActionEvent event) throws IOException {
+        showEntryWindow(null);
     }
     
     @FXML
@@ -58,6 +65,31 @@ public class MainFXMLController implements Initializable {
         listView.setItems(entryList);
     }
     
+    private void showEntryWindow(Entry e) throws IOException {
+        Stage entryStage = new Stage();
+        FXMLLoader entryLoader = new FXMLLoader(getClass().getResource("FXML/EntryFXML.fxml"));
+        Parent entryRoot = (Parent) entryLoader.load();
+        
+        EntryFXMLController entryController = entryLoader.<EntryFXMLController>getController();
+        
+        entryController.setSafe(safe);
+        entryController.setStage(entryStage);
+        
+        Scene entryScene = new Scene(entryRoot);
+        
+        stage = (Stage) vBox.getScene().getWindow();
+        
+        entryStage.initOwner(stage);
+        entryStage.initModality(Modality.WINDOW_MODAL);
+        entryStage.initStyle(StageStyle.UTILITY);
+        entryStage.setScene(entryScene);
+        entryStage.showAndWait();
+        
+        Serializer.save(safe);
+        
+        populateListView(safe.getAllEntries());
+    }
+    
     public void setSafe(Safe safe) {
         this.safe = safe;
         System.out.println("set the safe");
@@ -69,8 +101,6 @@ public class MainFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println(safe);
-//        populateListView(safe.getAllEntries());
     }
         
 }

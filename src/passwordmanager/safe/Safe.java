@@ -18,22 +18,31 @@ import passwordmanager.hash.*;
  */
 public class Safe implements Serializable {
     
+    private transient String path;
     private String passwordHash;
     private final ArrayList<Entry> entries = new ArrayList<>();
     
     final private Hashable hash = new HashFactory().getHash("dummy");
     
-    public void save(String path) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(path);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
+    public void setPath(String path) {
+        this.path = path;
     }
+    
+    public String getPath() {
+        return path;
+    }
+    
+//    public void save(String path) {
+//        try {
+//            FileOutputStream fileOut = new FileOutputStream(path);
+//            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//            out.writeObject(this);
+//            out.close();
+//            fileOut.close();
+//        } catch (IOException i) {
+//            i.printStackTrace();
+//        }
+//    }
 
     
     /**
@@ -57,19 +66,14 @@ public class Safe implements Serializable {
      * @param id The ID of the entry
      * @return The Entry that matches the given ID
      */
-    /*
     public Entry getEntry(int id) {
-        Entry e;
-        Iterator<Entry> i = getAllEntries();
-        while(i.hasNext()) {
-            e = i.next();
+        for (Entry e : entries) {
             if (e.getId() == id) {
                 return e;
             }
         }
-        throw new Error("Can't find Entry by ID: " + id);
+        return null;
     }
-    */
     
     /**
      * Function to create or change a password that automatically hashes it.
@@ -83,7 +87,8 @@ public class Safe implements Serializable {
         return passwordHash;
     }
 
-    public Safe(String password) {
+    public Safe(String password, String path) {
+        this.path = path;
         this.passwordHash = hash.getSaltedHash(password);
         entries.add(new Entry("title1", "username1", "password1"));
         entries.add(new Entry("title2", "username2", "password2"));

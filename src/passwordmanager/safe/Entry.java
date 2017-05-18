@@ -38,6 +38,11 @@ public class Entry implements Serializable {
         return String.format("%s [%s]", title, username);
     }
     
+    public Entry() {
+        this.id = entryCount;
+        entryCount++;
+    }
+    
     public Entry(String title, String username, String password) {
         this.id = entryCount;
         this.title = title;

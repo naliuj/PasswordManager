@@ -9,8 +9,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.URL;
-import static java.util.Objects.hash;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 import passwordmanager.hash.HashFactory;
 import passwordmanager.hash.Hashable;
 import passwordmanager.safe.Safe;
+import passwordmanager.safe.Serializer;
 
 /**
  *
@@ -68,23 +70,19 @@ public class LoginFXMLController implements Initializable {
         mainStage.show();
         
     }
-    
-    private void loadSafe() throws IOException, ClassNotFoundException {
-        FileInputStream fileIn = new FileInputStream(path);
-        ObjectInputStream in = new ObjectInputStream(fileIn);
-        safe = (Safe) in.readObject();
-        in.close();
-        fileIn.close();
-    }
-
+   
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            loadSafe();
+            safe = Serializer.load("safe.psafe");
         } catch (IOException i) {
-            safe = new Safe("password");
-            safe.save(path);
+            safe = new Safe("password", "safe.psafe");
+            try {
+                Serializer.save(safe);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         } catch (ClassNotFoundException c) {
             c.printStackTrace();
         }

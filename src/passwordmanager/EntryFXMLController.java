@@ -6,6 +6,7 @@
 package passwordmanager;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ public class EntryFXMLController implements Initializable {
     
     private Safe safe;
     private Stage stage;
+    private Entry entry;
     
     @FXML private GridPane gridPane;
     @FXML private TextField titleField;
@@ -36,15 +38,35 @@ public class EntryFXMLController implements Initializable {
         this.safe = safe;
     }
     
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+    
+    public void setEntry(Entry entry) {
+        this.entry = entry;
+    }
+    
+    private void initEntry() {
+        if (entry == null) {
+            entry = new Entry();
+            safe.addEntry(entry);
+        } else {
+            titleField.setText(entry.getTitle());
+            usernameField.setText(entry.getUsername());
+            passwordField.setText(entry.getPassword());
+        }
+    }
+    
     @FXML
     private void saveEntryButtonClick(ActionEvent event) {
-        Entry e = new Entry(
-                titleField.getText(),
-                usernameField.getText(),
-                passwordField.getText()
-        );
-        safe.addEntry(e);
-        safe.save("safe.psafe");
+        initEntry();
+        entry.setTitle(titleField.getText());
+        entry.setUsername(usernameField.getText());
+        entry.setPassword(passwordField.getText());
+        ArrayList<Entry> e = safe.getAllEntries();
+        e.forEach((entry) -> {
+            System.out.println(entry.toString());
+        });
         stage.close();
     }
     
@@ -55,7 +77,6 @@ public class EntryFXMLController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        stage = (Stage) gridPane.getScene().getWindow();
     }
     
 }
