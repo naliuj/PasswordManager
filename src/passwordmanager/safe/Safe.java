@@ -75,6 +75,10 @@ public class Safe implements Serializable {
         return null;
     }
     
+    public void deleteEntry(Entry entry) {
+        entries.remove(entry);
+    }
+    
     /**
      * Function to create or change a password that automatically hashes it.
      * @param password The new password as a String

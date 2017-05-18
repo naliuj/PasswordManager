@@ -66,7 +66,13 @@ public class MainFXMLController implements Initializable {
     
     @FXML
     private void deleteButtonClick(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet...");
+        try {
+            safe.deleteEntry(selectedEntry);
+            Serializer.save(safe);
+            populateListView(safe.getAllEntries());
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
     
     private void populateListView(ArrayList<Entry> entries) {
