@@ -37,7 +37,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
-            <Button fx:id="saveButton" layoutX="14.0" layoutY="31.0" mnemonicParsing="false" onAction="#saveEntryButtonClick" text="Save" />
+            <Button fx:id="saveButton" layoutX="14.0" layoutY="31.0" mnemonicParsing="false" onAction="#saveEntryButtonClick" text="Save" defaultButton="true" />
             <Button fx:id="cancelButton" layoutX="66.0" layoutY="31.0" mnemonicParsing="false" onAction="#cancelEntryButtonClick" text="Cancel" />
          </children>
       </AnchorPane>
