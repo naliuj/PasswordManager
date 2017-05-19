@@ -5,6 +5,7 @@
  */
 package passwordmanager;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -48,18 +49,25 @@ public class LoginFXMLController implements Initializable {
     
     @FXML
     private void loginButtonClick(ActionEvent event) {
-        if (hash.check(passwordPasswordField.getText(),
-                safe.getPasswordHash())) {
-            try {
-                showMainDialog();
-            } catch (IOException i) {
-                i.printStackTrace();
-            }
-            stage.close();
-        } else {
-            Alert alert = new Alert(AlertType.ERROR, "Incorrect password!");
+        if (safe == null) {
+            Alert alert = new Alert(AlertType.ERROR, "No safe selected!");
             alert.initOwner(stage);
             alert.showAndWait();
+            menuFileLoadClick(event);
+        } else {
+            if (hash.check(passwordPasswordField.getText(),
+                    safe.getPasswordHash())) {
+                try {
+                    showMainDialog();
+                } catch (IOException i) {
+                    i.printStackTrace();
+                }
+                stage.close();
+            } else {
+                Alert alert = new Alert(AlertType.ERROR, "Incorrect password!");
+                alert.initOwner(stage);
+                alert.showAndWait();
+            }
         }
     }
     
@@ -67,7 +75,18 @@ public class LoginFXMLController implements Initializable {
     private void menuFileLoadClick(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Safe File");
-        fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null) {
+            try {
+                String path = file.getPath();
+                safe = Serializer.load(path);
+                filePathLabel.setText(path);
+            } catch (IOException i) {
+                i.printStackTrace();
+            } catch (ClassNotFoundException c) {
+                c.printStackTrace();
+            }
+        }
     }
     
     private void showMainDialog() throws IOException {
@@ -95,18 +114,6 @@ public class LoginFXMLController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            safe = Serializer.load("safe.psafe");
-        } catch (IOException i) {
-            safe = new Safe("password", "safe.psafe");
-            try {
-                Serializer.save(safe);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } catch (ClassNotFoundException c) {
-            c.printStackTrace();
-        }
     }
     
 }
