@@ -77,9 +77,15 @@ public class MainFXMLController implements Initializable {
     
     private void populateListView(ArrayList<Entry> entries) {
         ObservableList<Entry> entryList = FXCollections.observableArrayList();
+        
+        // set the listView to be empty
+        listView.setItems(entryList);
+        
+        // add the entries to the entryList
         entries.forEach((e) -> {
             entryList.add((Entry) e);
         });
+        // set the listView to contain the entryList
         listView.setItems(entryList);
         
         listView.getSelectionModel().selectedItemProperty()
