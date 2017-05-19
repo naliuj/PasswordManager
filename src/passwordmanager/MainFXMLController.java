@@ -117,8 +117,6 @@ public class MainFXMLController implements Initializable {
         
         Scene entryScene = new Scene(entryRoot);
         
-        stage = (Stage) vBox.getScene().getWindow();
-        
         entryStage.initOwner(stage);
         entryStage.initModality(Modality.WINDOW_MODAL);
         entryStage.initStyle(StageStyle.UTILITY);
@@ -132,7 +130,14 @@ public class MainFXMLController implements Initializable {
     
     public void setSafe(Safe safe) {
         this.safe = safe;
-        System.out.println("set the safe");
+        populateListView(safe.getAllEntries());
+    }
+    
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+    
+    public void initListView() {
         populateListView(safe.getAllEntries());
     }
     

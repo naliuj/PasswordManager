@@ -20,8 +20,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import passwordmanager.hash.HashFactory;
 import passwordmanager.hash.Hashable;
@@ -39,13 +41,13 @@ public class LoginFXMLController implements Initializable {
     private Stage stage;
     private String path = "psafe.safe";
     
+    @FXML Label filePathLabel;
     @FXML VBox loginVBox;
     
     @FXML PasswordField passwordPasswordField;
     
     @FXML
     private void loginButtonClick(ActionEvent event) {
-        stage = (Stage) loginVBox.getScene().getWindow();
         if (hash.check(passwordPasswordField.getText(),
                 safe.getPasswordHash())) {
             try {
@@ -60,7 +62,14 @@ public class LoginFXMLController implements Initializable {
             alert.showAndWait();
         }
     }
-
+    
+    @FXML
+    private void menuFileLoadClick(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Safe File");
+        fileChooser.showOpenDialog(stage);
+    }
+    
     private void showMainDialog() throws IOException {
         Stage mainStage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/MainFXML.fxml"));
@@ -69,12 +78,18 @@ public class LoginFXMLController implements Initializable {
         MainFXMLController controller = loader.<MainFXMLController>getController();
         
         controller.setSafe(safe);
+        controller.setStage(mainStage);
+        controller.initListView();
         
         Scene scene = new Scene(root);
         
         mainStage.setScene(scene);
         mainStage.show();
         
+    }
+    
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
    
 

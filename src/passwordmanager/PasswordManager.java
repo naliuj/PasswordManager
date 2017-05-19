@@ -25,23 +25,15 @@ public class PasswordManager extends Application {
         FXMLLoader loader =  new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
         Parent root = (Parent) loader.load();
         
+        LoginFXMLController controller = loader.<LoginFXMLController>getController();
+        controller.setStage(stage);
+        
         Scene scene = new Scene(root);
         
         stage.initStyle(StageStyle.UTILITY);
         stage.setScene(scene);
         stage.show();
 
-//        Stage loginStage = new Stage();
-//        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("FXML/LoginFXML.fxml"));
-//        Parent loginRoot = (Parent) loginLoader.load();
-//        
-//        Scene loginScene = new Scene(loginRoot);
-//        
-//        loginStage.setScene(loginScene);
-//        loginStage.initStyle(StageStyle.UTILITY);
-//        loginStage.initOwner(mainStage);
-//        loginStage.initModality(Modality.APPLICATION_MODAL);
-//        loginStage.showAndWait();
     }
         
     /**
