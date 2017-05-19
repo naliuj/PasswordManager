@@ -18,6 +18,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -43,6 +45,7 @@ public class LoginFXMLController implements Initializable {
     
     @FXML
     private void loginButtonClick(ActionEvent event) {
+        stage = (Stage) loginVBox.getScene().getWindow();
         if (hash.check(passwordPasswordField.getText(),
                 safe.getPasswordHash())) {
             try {
@@ -50,8 +53,11 @@ public class LoginFXMLController implements Initializable {
             } catch (IOException i) {
                 i.printStackTrace();
             }
-            stage = (Stage) loginVBox.getScene().getWindow();
             stage.close();
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, "Incorrect password!");
+            alert.initOwner(stage);
+            alert.showAndWait();
         }
     }
 
