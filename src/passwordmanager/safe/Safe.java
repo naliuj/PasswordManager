@@ -94,8 +94,6 @@ public class Safe implements Serializable {
     public Safe(String password, String path) {
         this.path = path;
         this.passwordHash = hash.getSaltedHash(password);
-        entries.add(new Entry("title1", "username1", "password1"));
-        entries.add(new Entry("title2", "username2", "password2"));
     }
     
     public Safe() {}

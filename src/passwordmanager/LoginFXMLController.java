@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import passwordmanager.hash.HashFactory;
 import passwordmanager.hash.Hashable;
@@ -87,6 +88,25 @@ public class LoginFXMLController implements Initializable {
                 c.printStackTrace();
             }
         }
+    }
+    
+    @FXML
+    private void menuFileNewClick(ActionEvent event) throws IOException {
+        Stage newSafeStage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/NewSafeFXML.fxml"));
+        Parent root = (Parent) loader.load();
+        
+        NewSafeController controller = loader.<NewSafeController>getController();
+        
+        controller.setStage(newSafeStage);
+        
+        Scene scene = new Scene(root);
+        
+        newSafeStage.initOwner(stage);
+        newSafeStage.initModality(Modality.WINDOW_MODAL);
+        newSafeStage.setScene(scene);
+        newSafeStage.showAndWait();
+        
     }
     
     private void showMainDialog() throws IOException {
