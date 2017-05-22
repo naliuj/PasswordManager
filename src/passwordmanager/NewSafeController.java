@@ -49,10 +49,12 @@ public class NewSafeController implements Initializable {
     
     @FXML
     private void saveButtonClick(ActionEvent event) throws IOException {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Save Safe File");
-        File file = fc.showSaveDialog(stage);
-        Serializer.save(new Safe(passwordField.getText(), file.getPath()));
+        if (passwordField.getText().equals(confirmPasswordField.getText())) {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Save Safe File");
+            File file = fc.showSaveDialog(stage);
+            Serializer.save(new Safe(passwordField.getText(), file.getPath()));
+        }
     }
     
     @FXML private void cancelButtonClick(ActionEvent event) {
