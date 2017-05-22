@@ -58,7 +58,7 @@ public class NewSafeController implements Initializable {
     }
     
     @FXML private void cancelButtonClick(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet");
+        stage.close();
     }
     
     @Override
